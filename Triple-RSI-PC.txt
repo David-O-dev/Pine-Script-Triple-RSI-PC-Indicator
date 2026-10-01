@@ -1,0 +1,53 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Gradation0
+
+//@version=6
+indicator("MY RSI")
+
+rsi1Length = input.int(defval = 7, title = "RSI 1 Line", group = "RSI")
+rsi2Length = input.int(defval = 9, title = "RSI 2 Line", group = "RSI")
+rsi3Length = input.int(defval = 12, title = "RSI 3 Line", group = "RSI")
+RSI1 = ta.rsi(close, rsi1Length)
+RSI2 = ta.rsi(close, rsi2Length)
+RSI3 = ta.rsi(close, rsi3Length)
+
+plot(RSI1, color = color.green, linewidth = 2)
+plot(RSI2, color = color.orange, linewidth = 2)
+plot(RSI3, color = color.red, linewidth = 2)
+top = plot(55, color = color.green)
+bottom = plot(45, color = color.red)
+
+
+
+//PC for RSI 1
+UsePC1 = input.bool(defval = true, title = "PC 1 Switch", group = "PC Switches")
+PClength1 = input(9, group = "PC 1")
+offsetlength1 = input(0, group = "PC 1")
+PCColor1 = input.color(defval = color.black, title = "Price Channel 1 Color", group = "PC 1")
+
+highprice1 = ta.highest(RSI1, PClength1)
+lowprice1 = ta.lowest(RSI1, PClength1)
+plot(UsePC1 ? highprice1 : na, color=PCColor1, title="Highprice Line 1", offset=offsetlength1, linewidth = 4)
+plot(UsePC1 ? lowprice1 : na, color=PCColor1, title="Lowprice Line 1", offset=offsetlength1, linewidth = 4)
+
+//PC for RSI 2
+UsePC2 = input.bool(defval = true, title = "PC 2 Switch", group = "PC Switches")
+PClength2 = input(20, group = "PC 2")
+offsetlength2 = input(0, group = "PC 2")
+PCColor2 = input.color(defval = color.gray, title = "Price Channel 2 Color", group = "PC 2")
+
+highprice2 = ta.highest(RSI1, PClength2)
+lowprice2 = ta.lowest(RSI1, PClength2)
+plot(UsePC2 ? highprice2 : na, color=PCColor2, title="Highprice Line 2", offset=offsetlength1, linewidth = 4)
+plot(UsePC2 ? lowprice2 : na, color=PCColor2, title="Lowprice Line 2", offset=offsetlength1, linewidth = 4)
+
+//PC for RSI 3
+UsePC3 = input.bool(defval = true, title = "PC 3 Switch", group = "PC Switches")
+PClength3 = input(52, group = "PC 3")
+offsetlength3 = input(0, group = "PC 3")
+PCColor3 = input.color(defval = color.green, title = "Price Channel 3 Color", group = "PC 3")
+
+highprice3 = ta.highest(RSI1, PClength3)
+lowprice3 = ta.lowest(RSI1, PClength3)
+plot(UsePC3 ? highprice3 : na, color=PCColor3, title="Highprice Line 3", offset=offsetlength3, linewidth = 4)
+plot(UsePC3 ? lowprice3 : na, color=PCColor3, title="Lowprice Line 3", offset=offsetlength3, linewidth = 4)
